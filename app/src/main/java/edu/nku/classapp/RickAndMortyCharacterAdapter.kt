@@ -6,6 +6,7 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 
 class RickAndMortyCharacterAdapter(
     private val characters: List<RickAndMortyCharacter>
@@ -31,6 +32,11 @@ class RickAndMortyCharacterAdapter(
         holder.characterName.text = character.name
         holder.characterPlanet.text = character.planet
         holder.characterImage.setImageResource(R.drawable.ic_launcher_background)
+        Glide.with(holder.itemView.context)
+            .load(character.image)
+            .placeholder(R.drawable.ic_launcher_background)
+            .into(holder.characterImage)
+
     }
 
     override fun getItemCount() = characters.size
