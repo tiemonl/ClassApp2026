@@ -21,3 +21,6 @@ dependencyResolutionManagement {
 
 rootProject.name = "ClassApp"
 include(":app")
+file("class-app-submissions").listFiles()
+    ?.filter { it.isDirectory && file("${it.path}/app").exists() }
+    ?.forEach { include(":class-app-submissions:${it.name}:app") }
