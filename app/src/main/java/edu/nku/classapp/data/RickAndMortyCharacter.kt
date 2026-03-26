@@ -1,4 +1,4 @@
-package edu.nku.classapp
+package edu.nku.classapp.data
 
 data class RickAndMortyCharacter(
     val id: Int,
