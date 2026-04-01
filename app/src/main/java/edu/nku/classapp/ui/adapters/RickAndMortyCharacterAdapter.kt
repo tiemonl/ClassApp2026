@@ -1,16 +1,19 @@
 package edu.nku.classapp.ui.adapters
 
+import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import edu.nku.classapp.data.RickAndMortyCharacter
+import edu.nku.classapp.data.model.RickAndMortyCharactersDTO
 import edu.nku.classapp.databinding.CharacterCardViewBinding
 
 class RickAndMortyCharacterAdapter(
-    private val characters: List<RickAndMortyCharacter>,
-    private val onCharacterClicked: (position: Int) -> Unit,
+    private val onCharacterClicked: (character: RickAndMortyCharactersDTO.Character) -> Unit,
 ) : RecyclerView.Adapter<RickAndMortyCharacterAdapter.RickAndMortyCharacterViewHolder>() {
+
+    private val rickAndMortyCharacters = mutableListOf<RickAndMortyCharactersDTO.Character>()
+
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
@@ -19,16 +22,23 @@ class RickAndMortyCharacterAdapter(
             CharacterCardViewBinding.inflate(LayoutInflater.from(parent.context), parent, false)
 
         return RickAndMortyCharacterViewHolder(binding) { position ->
-            onCharacterClicked(position)
+            onCharacterClicked(rickAndMortyCharacters[position])
         }
     }
 
     override fun onBindViewHolder(
         holder: RickAndMortyCharacterViewHolder,
         position: Int
-    ) = holder.bind(characters[position])
+    ) = holder.bind(rickAndMortyCharacters[position])
 
-    override fun getItemCount() = characters.size
+    override fun getItemCount() = rickAndMortyCharacters.size
+
+    @SuppressLint("NotifyDataSetChanged")
+    fun refreshData(characters: List<RickAndMortyCharactersDTO.Character>) {
+        rickAndMortyCharacters.clear()
+        rickAndMortyCharacters.addAll(characters)
+        notifyDataSetChanged()
+    }
 
     class RickAndMortyCharacterViewHolder(
         private val binding: CharacterCardViewBinding,
@@ -40,9 +50,9 @@ class RickAndMortyCharacterAdapter(
             }
         }
 
-        fun bind(character: RickAndMortyCharacter) {
+        fun bind(character: RickAndMortyCharactersDTO.Character) {
             binding.characterName.text = character.name
-            binding.characterPlanet.text = character.planet
+            binding.characterPlanet.text = character.location.name
             Glide.with(binding.root).load(character.image).into(binding.characterImage)
         }
     }
