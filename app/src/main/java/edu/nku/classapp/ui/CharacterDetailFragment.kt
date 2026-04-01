@@ -29,9 +29,9 @@ class CharacterDetailFragment : Fragment() {
         _binding = FragmentCharacterDetailBinding.inflate(inflater, container, false)
 
         if (arguments != null) {
-            val character = viewModel.fetchById(requireArguments().getInt(BUNDLE_ID))
-
-            binding.characterName.text = character.name
+//            val character = viewModel.fetchById(requireArguments().getInt(BUNDLE_ID))
+//
+//            binding.characterName.text = character.name
 
         }
 
